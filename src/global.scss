@@ -5,6 +5,53 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: 'Nunito', sans-serif;
+}
+
+html,
+body,
+#root {
+  box-sizing: border-box;
+}
+
+$themes: (
+  light: (
+    textC: #000,
+    bgC: #fff,
+    logoC: darkblue,
+    bgsC: #f6f3f3,
+    textsC: #555,
+    borderC: lightgray,
+  ),
+  dark: (
+    textC: whitesmoke,
+    bgC: #222,
+    logoC: white,
+    bgsC: #333,
+    textsC: lightgray,
+    borderC: #444,
+  ),
+);
+
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
 }

@@ -1,11 +1,95 @@
-.rightbar {
-  flex: 3;
-  position: sticky;
-  overflow-y: scroll;
-  top: 50px;
-  height: calc(100vh - 70px);
+@import '../../global.scss';
 
-  &::-webkit-scrollbar {
-    display: none;
+.rightbar {
+  @include themify($themes) {
+    flex: 3;
+    position: sticky;
+    overflow-y: scroll;
+    top: 50px;
+    height: calc(100vh - 50px);
+    background-color: themed('bgsC');
+    color: themed('textC');
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .container {
+      padding: 20px;
+
+      .item {
+        box-shadow: -2px 2px 7px -1px rgba(0, 0, 0, 0.15);
+        -webkit-box-shadow: -2px 2px 7px -1px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: -2px 2px 7px -1px rgba(0, 0, 0, 0.15);
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: themed('bgC');
+
+        span {
+          color: themed('textsC');
+        }
+
+        .user {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: 20px 0;
+          position: relative;
+
+          .userinfo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .online {
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+              background-color: lime;
+              position: absolute;
+              top: 0;
+              left: 30px;
+            }
+
+            p {
+              color: themed('textsC');
+            }
+
+            span {
+              font-weight: 500;
+              color: themed('textC');
+            }
+          }
+
+          .buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            button {
+              border: none;
+              padding: 5px;
+              color: white;
+              cursor: pointer;
+
+              &:first-child {
+                background-color: #5271ff;
+              }
+
+              &:last-child {
+                background-color: #f0544f;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

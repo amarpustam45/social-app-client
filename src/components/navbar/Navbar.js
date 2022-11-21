@@ -6,11 +6,17 @@ import {
   AiOutlineSearch,
   AiOutlineBell,
 } from 'react-icons/ai';
-import { FiMoon } from 'react-icons/fi';
+import { FiMoon, FiSun } from 'react-icons/fi';
 import { IoPersonOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { DarkModeContext } from '../../context/darkModeContext';
+import { AuthContext } from '../../context/authContext';
 
 const Navbar = () => {
+  const { darkMode, toggle } = useContext(DarkModeContext);
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className='navbar'>
       <div className='left'>
@@ -18,7 +24,7 @@ const Navbar = () => {
           <span>SocialDemo</span>
         </Link>
         <AiOutlineHome />
-        <FiMoon />
+        {darkMode ? <FiSun onClick={toggle} /> : <FiMoon onClick={toggle} />}
         <AiOutlineAppstore />
         <div className='search'>
           <AiOutlineSearch />
@@ -31,11 +37,8 @@ const Navbar = () => {
         <AiOutlineMail />
         <AiOutlineBell />
         <div className='user'>
-          <img
-            src='https://media.istockphoto.com/id/1286272331/photo/beauty-portrait-of-young-asian-woman-on-the-light-and-shadow-background.jpg?b=1&s=612x612&w=0&k=20&c=Sq04NCS9ya5LRUh9ng_Y4BK3XrOZyGabA5eQ9qUoiFg='
-            alt=''
-          />
-          <span>John Doe</span>
+          <img src={currentUser.profilePic} alt='' />
+          <span>{currentUser.name}</span>
         </div>
       </div>
     </div>
