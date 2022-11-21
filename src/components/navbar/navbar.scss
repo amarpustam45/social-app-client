@@ -40,6 +40,14 @@
           background-color: transparent;
           color: themed('textC');
 
+          @include mobile {
+            display: none;
+          }
+
+          @include tablet {
+            width: 12rem;
+          }
+
           &:focus {
             outline: none;
           }
@@ -52,11 +60,18 @@
       align-items: center;
       gap: 20px;
 
+      @include mobile {
+        display: none;
+      }
       .user {
         display: flex;
         align-items: center;
         gap: 10px;
         font-weight: 600;
+
+        @include tablet {
+          display: none;
+        }
 
         img {
           width: 2.5rem;

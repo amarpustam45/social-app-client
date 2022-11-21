@@ -6,12 +6,15 @@ import {
   MdOutlineShare,
   MdOutlineMoreHoriz,
 } from 'react-icons/md';
-
 import { Link } from 'react-router-dom';
+import Comments from '../comments/Comments';
+import { useState } from 'react';
 
 const Post = ({ post }) => {
   //temp
   const liked = false;
+
+  const [commentOpen, setCommentOpen] = useState(false);
 
   return (
     <div className='post'>
@@ -40,7 +43,7 @@ const Post = ({ post }) => {
             {liked ? <MdOutlineFavorite /> : <MdOutlineFavoriteBorder />}
             12 likes
           </div>
-          <div className='item'>
+          <div className='item' onClick={() => setCommentOpen(!commentOpen)}>
             <MdOutlineTextsms />
             Comment
           </div>
@@ -49,6 +52,7 @@ const Post = ({ post }) => {
             Share
           </div>
         </div>
+        {commentOpen && <Comments />}
       </div>
     </div>
   );
