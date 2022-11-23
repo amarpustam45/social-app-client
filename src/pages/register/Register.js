@@ -1,23 +1,69 @@
 import './register.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { makeRequest } from '../../axios.js';
 
 const Register = () => {
+  const [inputs, setInputs] = useState({
+    username: '',
+    email: '',
+    name: '',
+    password: '',
+  });
+
+  const [err, setErr] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await makeRequest.post('/auth/register', inputs);
+      navigate('/login');
+    } catch (error) {
+      setErr(error.response.data);
+    }
+  };
+
+  console.log(err);
+
   return (
     <div className='register'>
       <div className='card'>
         <div className='left'>
           <h1>Register</h1>
           <form>
-            <input type='text' name='username' id='' placeholder='Username' />
-            <input type='email' name='email' id='' placeholder='Email' />
-            <input type='text' name='name' id='' placeholder='Name' />
+            <input
+              type='text'
+              name='username'
+              placeholder='Username'
+              onChange={handleChange}
+            />
+            <input
+              type='email'
+              name='email'
+              placeholder='Email'
+              onChange={handleChange}
+            />
+            <input
+              type='text'
+              name='name'
+              placeholder='Name'
+              onChange={handleChange}
+            />
             <input
               type='password'
               name='password'
-              id=''
               placeholder='Password'
+              onChange={handleChange}
             />
-            <button>Register</button>
+            {err && <div className='errorMsg'>{err}</div>}
+            <button onClick={handleSubmit}>Register</button>
           </form>
         </div>
         <div className='right'>

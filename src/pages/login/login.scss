@@ -64,6 +64,14 @@
         display: flex;
         flex-direction: column;
         gap: 30px;
+
+        .errorMsg {
+          color: rgb(255, 0, 0);
+          text-align: center;
+          background-color: rgba(255, 0, 0, 0.288);
+          padding: 5px;
+          border-radius: 3px;
+        }
       }
 
       input {
