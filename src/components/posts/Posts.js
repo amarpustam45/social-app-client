@@ -1,4 +1,5 @@
 import Post from '../post/Post';
+import Loading from '../loading/Loading';
 import './posts.scss';
 import { useQuery } from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
@@ -11,16 +12,18 @@ const Posts = () => {
         return res.data;
       }),
   });
-  console.log(data);
+
   return (
     <div className='posts'>
-      {error
-        ? 'An error occured, reload the page'
-        : isLoading
-        ? 'loading...'
-        : data.map((post) => {
-            return <Post post={post} key={post.id} />;
-          })}
+      {error ? (
+        'An error occured, reload the page'
+      ) : isLoading ? (
+        <Loading />
+      ) : (
+        data.map((post) => {
+          return <Post post={post} key={post.id} />;
+        })
+      )}
     </div>
   );
 };

@@ -9,6 +9,8 @@ import {
 import { Link } from 'react-router-dom';
 import Comments from '../comments/Comments';
 import { useState } from 'react';
+import { CloudinaryDisplay } from '../cloudinary/Cloudinary';
+import moment from 'moment';
 
 const Post = ({ post }) => {
   //temp
@@ -29,14 +31,14 @@ const Post = ({ post }) => {
               >
                 <span className='name'>{post.name}</span>
               </Link>
-              <span className='date'>1 min ago</span>
+              <span className='date'>{moment(post.createdAt).fromNow()}</span>
             </div>
           </div>
           <MdOutlineMoreHoriz />
         </div>
         <div className='content'>
           <p>{post.desc}</p>
-          <img src={post.img} alt='' />
+          {post.img && <CloudinaryDisplay image={post.img} />}
         </div>
         <div className='info'>
           <div className='item'>
