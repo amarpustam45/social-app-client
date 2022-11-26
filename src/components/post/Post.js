@@ -8,15 +8,46 @@ import {
 } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import Comments from '../comments/Comments';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { CloudinaryDisplay } from '../cloudinary/Cloudinary';
 import moment from 'moment';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
+import { AuthContext } from '../../context/authContext';
 
 const Post = ({ post }) => {
-  //temp
-  const liked = false;
-
   const [commentOpen, setCommentOpen] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['likes', post.id],
+    queryFn: () =>
+      makeRequest.get('/likes?postId=' + post.id).then((res) => {
+        return res.data;
+      }),
+  });
+
+  // Access the client
+  const queryClient = useQueryClient();
+
+  // Mutations
+  const mutation = useMutation(
+    (liked) => {
+      if (liked) return makeRequest.post('/likes', { postId: post.id });
+      return makeRequest.delete('/likes', { postId: post.id });
+    },
+    {
+      // mutationFn: postTodo,
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries({ queryKey: ['likes'] });
+      },
+    }
+  );
+
+  const handleLike = () => {
+    mutation.mutate(data.includes(currentUser.id));
+  };
 
   return (
     <div className='post'>
@@ -42,8 +73,15 @@ const Post = ({ post }) => {
         </div>
         <div className='info'>
           <div className='item'>
-            {liked ? <MdOutlineFavorite /> : <MdOutlineFavoriteBorder />}
-            12 likes
+            {data && data.includes(currentUser.id) ? (
+              <MdOutlineFavorite
+                style={{ color: 'red' }}
+                onClick={handleLike}
+              />
+            ) : (
+              <MdOutlineFavoriteBorder onClick={handleLike} />
+            )}
+            {data && data.length} likes
           </div>
           <div className='item' onClick={() => setCommentOpen(!commentOpen)}>
             <MdOutlineTextsms />
@@ -54,7 +92,7 @@ const Post = ({ post }) => {
             Share
           </div>
         </div>
-        {commentOpen && <Comments />}
+        {commentOpen && <Comments postId={post.id} />}
       </div>
     </div>
   );
