@@ -14,64 +14,88 @@ import {
   MdOutlineMoreVert,
 } from 'react-icons/md';
 import Posts from '../../components/posts/Posts';
+import { useQuery } from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
+import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 
 const Profile = () => {
+  const { currentUser } = useContext(AuthContext);
+
+  const userId = useLocation().pathname.split('/')[2];
+  console.log(userId);
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['user'],
+    queryFn: () =>
+      makeRequest.get('/users/find/' + userId).then((res) => {
+        return res.data;
+      }),
+  });
+
   return (
     <div className='profile'>
-      <div className='images'>
-        <img
-          src='https://images.pexels.com/photos/207636/pexels-photo-207636.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-          alt=''
-          className='cover'
-        />
-        <img
-          src='https://images.pexels.com/users/avatars/447505/dids-186.jpeg?auto=compress&fit=crop&h=130&w=130&dpr=1'
-          alt=''
-          className='profilePic'
-        />
-      </div>
-      <div className='profileContainer'>
-        <div className='uInfo'>
-          <div className='left'>
-            <a href='https://www.facebook.com/'>
-              <FaFacebookSquare />
-            </a>
-            <a href='https://www.instagram.com/'>
-              <FaInstagram />
-            </a>
-            <a href='https://www.twitter.com/'>
-              <FaTwitter />
-            </a>
-            <a href='https://www.linkedin.com/'>
-              <FaLinkedin />
-            </a>
-            <a href='https://www.pinterest.com/'>
-              <FaPinterestSquare />
-            </a>
+      {isLoading ? (
+        'loading'
+      ) : (
+        <>
+          <div className='images'>
+            <img src={data.coverPic} alt='' className='cover' />
+            <img src={data.profilePic} alt='' className='profilePic' />
           </div>
 
-          <div className='center'>
-            <span>Jane Doe</span>
-            <div className='info'>
-              <div className='item'>
-                <MdOutlinePlace />
-                <span>TT</span>
+          <div className='profileContainer'>
+            <div className='uInfo'>
+              <div className='left'>
+                <a href='https://www.facebook.com/'>
+                  <FaFacebookSquare />
+                </a>
+                <a href='https://www.instagram.com/'>
+                  <FaInstagram />
+                </a>
+                <a href='https://www.twitter.com/'>
+                  <FaTwitter />
+                </a>
+                <a href='https://www.linkedin.com/'>
+                  <FaLinkedin />
+                </a>
+                <a href='https://www.pinterest.com/'>
+                  <FaPinterestSquare />
+                </a>
               </div>
-              <div className='item'>
-                <MdLanguage />
-                <span>English</span>
+
+              <div className='center'>
+                <span>{data.name}</span>
+                <div className='info'>
+                  <div className='item'>
+                    <MdOutlinePlace />
+                    <span>{data.city}</span>
+                  </div>
+                  <div className='item'>
+                    <MdLanguage />
+                    <span>
+                      <a href={data.website} target='blank'>
+                        website
+                      </a>
+                    </span>
+                  </div>
+                </div>
+                {data.id === currentUser.id ? (
+                  <button>Update</button>
+                ) : (
+                  <button>Follow</button>
+                )}
+              </div>
+
+              <div className='right'>
+                <MdOutlineEmail />
+                <MdOutlineMoreVert />
               </div>
             </div>
-            <button>Follow</button>
+            <Posts />
           </div>
-
-          <div className='right'>
-            <MdOutlineEmail />
-            <MdOutlineMoreVert />
-          </div>
-        </div>
-        <Posts />
-      </div>
+        </>
+      )}
     </div>
   );
 };

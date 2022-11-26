@@ -33,8 +33,8 @@ const Post = ({ post }) => {
   // Mutations
   const mutation = useMutation(
     (liked) => {
-      if (liked) return makeRequest.post('/likes', { postId: post.id });
-      return makeRequest.delete('/likes', { postId: post.id });
+      if (liked) return makeRequest.delete('/likes?postId=' + post.id);
+      return makeRequest.post('/likes', { postId: post.id });
     },
     {
       // mutationFn: postTodo,
@@ -73,7 +73,9 @@ const Post = ({ post }) => {
         </div>
         <div className='info'>
           <div className='item'>
-            {data && data.includes(currentUser.id) ? (
+            {isLoading ? (
+              'loading'
+            ) : data.includes(currentUser.id) ? (
               <MdOutlineFavorite
                 style={{ color: 'red' }}
                 onClick={handleLike}
@@ -81,7 +83,7 @@ const Post = ({ post }) => {
             ) : (
               <MdOutlineFavoriteBorder onClick={handleLike} />
             )}
-            {data && data.length} likes
+            {isLoading ? '0' : data.length} likes
           </div>
           <div className='item' onClick={() => setCommentOpen(!commentOpen)}>
             <MdOutlineTextsms />
