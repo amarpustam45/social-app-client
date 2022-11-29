@@ -6,6 +6,7 @@ import Friend from '../../assets/friend.png';
 import './share.scss';
 import { makeRequest } from '../../axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CloudinaryDisplay } from '../cloudinary/Cloudinary';
 
 const Share = () => {
   // Access the client
@@ -38,7 +39,6 @@ const Share = () => {
     if (file) {
       const imgUrl = await uploadImage(file);
       mutation.mutate({ desc, img: imgUrl });
-      console.log(file);
     } else {
       mutation.mutate({ desc, img: '' });
     }
@@ -72,7 +72,7 @@ const Share = () => {
       <div className='container'>
         <div className='top'>
           <div className='left'>
-            <img src={currentUser.profilePic} alt='' />
+            <CloudinaryDisplay image={currentUser.profilePic} />
             <input
               type='text'
               placeholder={`What's on your mind ${currentUser.name}?`}

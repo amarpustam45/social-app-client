@@ -1,0 +1,93 @@
+@import '../../global.scss';
+
+.update {
+  @include themify($themes) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50%;
+    height: 80%;
+    background-color: themed('bgC');
+    color: themed('textC');
+    border: 1px solid themed('textC');
+    border-radius: 20px;
+    padding: 50px;
+    z-index: 9999;
+    overflow: hidden;
+
+    .title {
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .inputSplit {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      input {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid themed('bgsC');
+        color: themed('textC');
+        padding: 4px 20px;
+        flex: 1;
+      }
+
+      .imgContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 50px;
+
+        img {
+          width: 250px;
+          height: 150px;
+          object-fit: cover;
+        }
+
+        span {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: red;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .buttonContainer {
+      width: 100%;
+      text-align: center;
+      margin: 20px;
+
+      .updateButton {
+        font-size: 1.5rem;
+        background-color: themed('bgsC');
+        border: themed('textsC');
+        color: themed('textC');
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    }
+  }
+}

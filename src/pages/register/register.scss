@@ -1,3 +1,5 @@
+@import '../../global.scss';
+
 .register {
   height: 100vh;
   background-color: rgb(193, 190, 225);
@@ -13,6 +15,10 @@
     min-height: 500px;
     overflow: hidden;
 
+    @include mobile {
+      width: 75%;
+    }
+
     .left {
       flex: 1;
       padding: 50px;
@@ -23,6 +29,10 @@
 
       h1 {
         color: #555;
+
+        @include mobile {
+          text-align: center;
+        }
       }
 
       form {
@@ -36,6 +46,24 @@
           background-color: rgba(255, 0, 0, 0.288);
           padding: 5px;
           border-radius: 3px;
+        }
+      }
+
+      .toLoginContainer {
+        display: none;
+
+        @include mobile {
+          display: block;
+          text-align: center;
+
+          span,
+          button {
+            font-size: 0.7rem;
+          }
+
+          button {
+            opacity: 0.7;
+          }
         }
       }
 
@@ -53,6 +81,7 @@
         color: white;
         font-weight: 600;
         cursor: pointer;
+        margin: 0 auto;
       }
     }
 
@@ -67,6 +96,10 @@
       flex-direction: column;
       gap: 30px;
       color: white;
+
+      @include mobile {
+        display: none;
+      }
 
       h1 {
         font-size: 80px;

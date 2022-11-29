@@ -65,6 +65,13 @@ const Register = () => {
             {err && <div className='errorMsg'>{err}</div>}
             <button onClick={handleSubmit}>Register</button>
           </form>
+
+          <div className='toLoginContainer'>
+            <span>Already have an account?</span>
+            <Link to='/login'>
+              <button>Login</button>
+            </Link>
+          </div>
         </div>
         <div className='right'>
           <h1>Social App</h1>

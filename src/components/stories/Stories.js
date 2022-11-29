@@ -1,6 +1,7 @@
 import './stories.scss';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
+import { CloudinaryDisplay } from '../cloudinary/Cloudinary';
 
 const Stories = () => {
   //temporary data
@@ -37,7 +38,7 @@ const Stories = () => {
   return (
     <div className='stories'>
       <div className='story'>
-        <img src={currentUser.profilePic} alt='' />
+        <CloudinaryDisplay image={currentUser.profilePic} />
         <span>{currentUser.name}</span>
         <button>+</button>
       </div>

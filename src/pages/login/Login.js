@@ -60,6 +60,13 @@ const Login = () => {
             {err && <div className='errorMsg'>{err}</div>}
             <button onClick={handleLogin}>Login</button>
           </form>
+
+          <div className='toRegisterContainer'>
+            <span>Don't have an account?</span>
+            <Link to='/register'>
+              <button>Register</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

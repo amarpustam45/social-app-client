@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { AuthContext } from '../../context/authContext';
+import { CloudinaryDisplay } from '../cloudinary/Cloudinary';
 
 const Navbar = () => {
   const { darkMode, toggle } = useContext(DarkModeContext);
@@ -37,7 +38,7 @@ const Navbar = () => {
         <AiOutlineMail />
         <AiOutlineBell />
         <div className='user'>
-          <img src={currentUser.profilePic} alt='' />
+          <CloudinaryDisplay image={currentUser.profilePic} />
           <span>{currentUser.name}</span>
         </div>
       </div>
