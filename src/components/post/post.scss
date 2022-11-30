@@ -16,6 +16,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        position: relative;
 
         .userInfo {
           display: flex;
@@ -39,6 +40,21 @@
               font-size: 0.8rem;
             }
           }
+        }
+
+        .more {
+          cursor: pointer;
+        }
+
+        button {
+          position: absolute;
+          top: 30px;
+          right: 0;
+          border: none;
+          background-color: red;
+          cursor: pointer;
+          color: white;
+          padding: 5px;
         }
       }
 

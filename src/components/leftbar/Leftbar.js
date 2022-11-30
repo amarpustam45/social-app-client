@@ -14,6 +14,7 @@ import Courses from '../../assets/12.png';
 import Fund from '../../assets/13.png';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
+import { CloudinaryDisplay } from '../cloudinary/Cloudinary';
 
 const Leftbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -23,7 +24,7 @@ const Leftbar = () => {
       <div className='container'>
         <div className='menu'>
           <div className='user'>
-            <img src={currentUser.profilePic} alt='' />
+            <CloudinaryDisplay image={currentUser.profilePic} />
             <span>{currentUser.name}</span>
           </div>
           <div className='item'>
