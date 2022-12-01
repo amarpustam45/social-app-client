@@ -37,10 +37,12 @@ const Navbar = () => {
         <IoPersonOutline />
         <AiOutlineMail />
         <AiOutlineBell />
-        <div className='user'>
-          <CloudinaryDisplay image={currentUser.profilePic} />
-          <span>{currentUser.name}</span>
-        </div>
+        <Link to={`/profile/${currentUser.id}`}>
+          <div className='user'>
+            <CloudinaryDisplay image={currentUser.profilePic} />
+            <span>{currentUser.name}</span>
+          </div>
+        </Link>
       </div>
     </div>
   );
